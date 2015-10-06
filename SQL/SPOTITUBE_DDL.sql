@@ -30,3 +30,12 @@ CREATE TABLE Videos (
     
     PRIMARY KEY(id)
 );
+
+-- Table: Playlist
+DROP TABLE IF EXISTS Playlist;
+CREATE TABLE Playlist (
+	owner VARCHAR(100) NOT NULL,
+	name VARCHAR(100) NOT NULL,
+	
+	PRIMARY KEY(owner, name)
+);
