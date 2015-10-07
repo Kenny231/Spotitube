@@ -34,8 +34,9 @@ CREATE TABLE Videos (
 -- Table: Playlist
 DROP TABLE IF EXISTS Playlist;
 CREATE TABLE Playlist (
+	id INT NOT NULL AUTO_INCREMENT,
 	owner VARCHAR(100) NOT NULL,
 	name VARCHAR(100) NOT NULL,
 	
-	PRIMARY KEY(owner, name)
+	PRIMARY KEY(id)
 );
