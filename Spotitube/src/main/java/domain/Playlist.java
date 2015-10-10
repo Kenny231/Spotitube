@@ -3,9 +3,9 @@ package domain;
 public class Playlist {
 	private String owner;
 	private String name;
-	private long id;
-	
-	public Playlist(long id, String owner, String name)
+	private int id;
+		
+	public Playlist(int id, String owner, String name)
 	{
 		this.id = id;
 		this.owner = owner;

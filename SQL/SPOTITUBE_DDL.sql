@@ -68,52 +68,6 @@ CREATE TABLE Availability (
 );
 
 /*
-	Stored procedures, die alles in één keer goed invoeren.
-*/
-DROP PROCEDURE IF EXISTS sp_insert_song;
-DROP PROCEDURE IF EXISTS sp_insert_video;
-
-DELIMITER $
-
-CREATE PROCEDURE sp_insert_song(
-	IN i_performer VARCHAR(100),
-	IN i_title VARCHAR(100),
-	IN i_url VARCHAR(200),
-	IN i_duration INT,
-	IN i_album VARCHAR(100)
-)
-BEGIN
-	DECLARE i_id INT;
-    
-	INSERT INTO Track VALUES (0, i_performer, i_title, i_url, i_duration);
-	-- Id ophalen die gegenereerd is.
-	SELECT id INTO i_id FROM Track WHERE performer = i_performer AND title = i_title AND url = i_url AND duration = i_duration;
-	-- Song data inserten.
-	INSERT INTO songs VALUES (i_id, i_album);
-END $
-
-CREATE PROCEDURE sp_insert_video(
-	IN i_performer VARCHAR(100),
-	IN i_title VARCHAR(100),
-	IN i_url VARCHAR(200),
-	IN i_duration INT,
-	IN i_playcount INT,
-	IN i_publicaton_date VARCHAR(100),
-	IN i_description VARCHAR(500)
-)
-BEGIN
-	DECLARE i_id INT;
-    
-	INSERT INTO Track VALUES (0, i_performer, i_title, i_url, i_duration);
-	-- Id ophalen die gegenereerd is.
-	SELECT id INTO i_id FROM Track WHERE performer = i_performer AND title = i_title AND url = i_url AND duration = i_duration;
-	-- Song data inserten.
-	INSERT INTO videos VALUES (i_id, i_playcount, i_publicaton_date, i_description);
-END $
-
-DELIMITER ;
-
-/*
 	Views die het gemakkelijker maken om dingen te selecteren.
 */
 DROP VIEW IF EXISTS song_view;

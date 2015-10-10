@@ -5,111 +5,71 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import domain.*;
 
-public class TrackDAO extends Database{
-	private static Logger logger = Logger.getLogger(TrackDAO.class.getName());
+public class TrackDAO {
+	private static final Logger logger = Logger.getLogger(TrackDAO.class.getName());
 	// Dao's.
 	private SongDAO songDAO = new SongDAO();
 	private VideoDAO videoDAO = new VideoDAO();
-	// Track table.
-	private static final String updateStatementString = 
-		"UPDATE Track " + 
-		" SET performer=?, title=?, url=?, duration=?" +
-		" WHERE id = ?";
-	private static final String deleteStatementString = 
-		"DELETE FROM Track" + 
-		" WHERE id = ?";	
-	// Availability table
-	private static final String selectTrackStatementString = 
-		"SELECT playlist_id, track_id, available" +
-		" FROM Availability" +
-		" WHERE playlist_id = ?";
-	/*
-	 * SELECT
+	private AvailabilityDAO availabilityDAO = new AvailabilityDAO();
+	// Hashmap met alle tracks.
+	private Map<Integer, Track> trackList = new HashMap<Integer, Track>();
+	
+	/* 
+	 * Alle tracks ophalen en in een list stoppen.
+	 * Op deze manier hoeven we niet steeds een query
+	 * uit te voeren om tracks op te halen.
 	 */
+	public TrackDAO()
+	{
+		load();
+	}
+	private void load()
+	{
+		songDAO.load(trackList);
+		videoDAO.load(trackList);
+	}	
 	
 	/*
-	 * Method to find all the tracks (songs and videos)
-	 * for a specific playlist.
+	 * Methode om alle tracks te vinden bij een bepaalde playlist id.
 	 */
-    public List<Track> findTracksByPlaylistId(long playlistId)
+    public List<Track> findTracksByPlaylistId(int playlistId)
     {
-			List<Track> track_list = new ArrayList<Track>();
-	    	songDAO.findTracksByPlaylistId(playlistId, track_list);
-	    	videoDAO.findTracksByPlaylistId(playlistId, track_list);
-			return track_list;
+		List<Track> trackList = new ArrayList<Track>();
+		List<Integer> trackIds = availabilityDAO.getTrackIdsByPlaylist(playlistId);
+		addTracksFromList(trackList, trackIds);
+		return trackList;
+    }
+    private void addTracksFromList(List<Track> trackList, List<Integer> trackIds)
+    {
+    	for (int trackId : trackIds)
+    	{
+    		Track track = this.trackList.get(trackId);
+    		if (track != null)
+    			trackList.add(track);
+    	}
     }
     
     /*
-     * INSERT
+     * Methode om een track toe te voegen aan een playlist
      */
-    public void insert(String performer, String title, String url, int duration, String album)
+    public void addTrackToPlaylist(int playlistId, int trackId, int availability)
     {
-    	songDAO.insert(performer, title, url, duration, album);
-    }
-    public void insert(String performer, String title, String url, int duration, int playcount, String publicationDate, String description)
-    {
-    	videoDAO.insert(performer, title, url, duration, playcount, publicationDate, description);
+    	availabilityDAO.insert(playlistId, trackId, availability);
     }
     /*
-     * UPDATE
+     * Methode om een track te verwijderen van een playlist
      */
-    private void update(long id, String performer, String title, String url, int duration)
+    public void deleteTrackFromPlaylist(int playlistId, int trackId)
     {
-    	PreparedStatement statement = null;
-    	try
-    	{
-			Connection conn = getConnection();
-			statement = conn.prepareStatement(updateStatementString);
-			statement.setString(1, performer);
-			statement.setString(2, title);
-			statement.setString(3, url);
-			statement.setInt(4, duration);
-			statement.setLong(5, id);
-			statement.execute(); 
-    	}
-    	catch(SQLException e) {
-    		logger.log(Level.SEVERE, "Error communicating with database.", e);
-    	}
-    	finally {
-    		closeStatement(statement);
-    		closeDatabase();
-    	}    	
+    	availabilityDAO.delete(playlistId, trackId);
     }
-    public void update(long id, String performer, String title, String url, int duration, String album)
-    {
-    	update(id, performer, title, url, duration);
-    	songDAO.update(id, album);
-    }
-    public void update(long id, String performer, String title, String url, int duration, int playcount, String publicationDate, String description)
-    {
-    	update(id, performer, title, url, duration);
-    	videoDAO.update(id, playcount, publicationDate, description);    		
-    }
-    /*
-     * DELETE
-     */
-    public void delete(long id)
-    {
-        PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(deleteStatementString);
-    		statement.setLong(1, id);
-    		statement.execute();
-    	}
-    	catch (SQLException e) {
-    		logger.log(Level.SEVERE, "Error communicating with database.", e);
-    	}
-    	finally {
-    		closeStatement(statement);
-    		closeDatabase();
-    	}
-	}
 }

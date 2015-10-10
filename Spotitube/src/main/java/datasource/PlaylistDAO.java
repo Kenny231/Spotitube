@@ -58,7 +58,7 @@ public class PlaylistDAO extends Database{
         List<Playlist> list = new ArrayList<Playlist>();
         while (rs.next())
         {
-            list.add(new Playlist(rs.getLong(1), rs.getString(2), rs.getString(3)));
+            list.add(new Playlist(rs.getInt(1), rs.getString(2), rs.getString(3)));
         }
         return list;
     }
@@ -87,7 +87,7 @@ public class PlaylistDAO extends Database{
     /*
      * UPDATE
      */
-    public void update(long id, String owner, String name)
+    public void update(int id, String owner, String name)
     {
     	PreparedStatement statement = null;
     	try
@@ -96,7 +96,7 @@ public class PlaylistDAO extends Database{
     		statement = conn.prepareStatement(updateStatementString);
     		statement.setString(1, owner);
     		statement.setString(2, name);
-    		statement.setLong(3, id);
+    		statement.setInt(3, id);
     		statement.execute();
     	}
     	catch(SQLException e) {
@@ -110,14 +110,14 @@ public class PlaylistDAO extends Database{
     /*
      * DELETE
      */
-    public void delete(long id)
+    public void delete(int id)
     {
     	PreparedStatement statement = null;
     	try
     	{
     		Connection conn = getConnection();
     		statement = conn.prepareStatement(deleteStatementString);
-    		statement.setLong(1, id);
+    		statement.setInt(1, id);
     		statement.execute();
     	}
     	catch (SQLException e) {
