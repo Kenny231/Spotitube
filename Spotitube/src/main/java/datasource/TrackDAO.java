@@ -57,19 +57,17 @@ public class TrackDAO {
     			trackList.add(track);
     	}
     }
-    
     /*
-     * Methode om een track toe te voegen aan een playlist
+     * Methode om een track te vinden met een bepaalde titel.
      */
-    public void addTrackToPlaylist(int playlistId, int trackId, int availability)
+    public List<Track> findTrackByTitle(String title)
     {
-    	availabilityDAO.insert(playlistId, trackId, availability);
-    }
-    /*
-     * Methode om een track te verwijderen van een playlist
-     */
-    public void deleteTrackFromPlaylist(int playlistId, int trackId)
-    {
-    	availabilityDAO.delete(playlistId, trackId);
+    	List<Track> trackList = new ArrayList<Track>();
+    	for (Track track : trackList)
+    	{
+    		if (track.getTitle().toLowerCase() == title.toLowerCase())
+    			trackList.add(track);
+    	}
+    	return trackList;
     }
 }

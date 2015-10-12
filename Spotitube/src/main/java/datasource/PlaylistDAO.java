@@ -10,6 +10,8 @@ import domain.Playlist;
 
 public class PlaylistDAO extends Database{
 	private final static Logger LOGGER = Logger.getLogger(PlaylistDAO.class.getName());
+	private AvailabilityDAO availabilityDAO = new AvailabilityDAO();
+	private TrackDAO trackDAO = new TrackDAO();
 	/*
 	 * Op playlist owner zoeken, de selectie van de juiste playlist
 	 * (op naam) gebeurd later.
@@ -58,7 +60,7 @@ public class PlaylistDAO extends Database{
         List<Playlist> list = new ArrayList<Playlist>();
         while (rs.next())
         {
-            list.add(new Playlist(rs.getInt(1), rs.getString(2), rs.getString(3)));
+            list.add(new Playlist(rs.getInt(1), rs.getString(2), rs.getString(3), trackDAO.findTracksByPlaylistId(rs.getInt(1)), this));
         }
         return list;
     }
@@ -128,4 +130,18 @@ public class PlaylistDAO extends Database{
 			closeDatabase();
     	}
     }
+    /*
+     * Methode om een track toe te voegen aan een playlist
+     */
+    public void addTrackToPlaylist(int playlistId, int trackId, int availability)
+    {
+    	availabilityDAO.insert(playlistId, trackId, availability);
+    }
+    /*
+     * Methode om een track te verwijderen van een playlist
+     */
+    public void deleteTrackFromPlaylist(int playlistId, int trackId)
+    {
+    	availabilityDAO.delete(playlistId, trackId);
+    }    
 }
