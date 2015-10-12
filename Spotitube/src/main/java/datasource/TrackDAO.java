@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import domain.*;
 
 public class TrackDAO {
-	private static final Logger logger = Logger.getLogger(TrackDAO.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(TrackDAO.class.getName());
 	// Dao's.
 	private SongDAO songDAO = new SongDAO();
 	private VideoDAO videoDAO = new VideoDAO();

@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import domain.Playlist;
 
 public class PlaylistDAO extends Database{
-	private static Logger logger = Logger.getLogger(PlaylistDAO.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(PlaylistDAO.class.getName());
 	/*
 	 * Op playlist owner zoeken, de selectie van de juiste playlist
 	 * (op naam) gebeurd later.
@@ -43,7 +43,7 @@ public class PlaylistDAO extends Database{
 			return list;
 		}
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, "Error communicating with database.", e);
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
 		}
 		finally {
 			closeStatement(statement);
@@ -77,7 +77,7 @@ public class PlaylistDAO extends Database{
     		statement.execute();
     	} 
     	catch (SQLException e) {
-    		logger.log(Level.SEVERE, "Error communicating with database.", e);
+    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
     	} 
     	finally {
 			closeStatement(statement);
@@ -100,7 +100,7 @@ public class PlaylistDAO extends Database{
     		statement.execute();
     	}
     	catch(SQLException e) {
-    		logger.log(Level.SEVERE, "Error communicating with database.", e);
+    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
     	}
     	finally {
 			closeStatement(statement);
@@ -121,7 +121,7 @@ public class PlaylistDAO extends Database{
     		statement.execute();
     	}
     	catch (SQLException e) {
-    		logger.log(Level.SEVERE, "Error communicating with database.", e);
+    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
     	}
     	finally {
 			closeStatement(statement);

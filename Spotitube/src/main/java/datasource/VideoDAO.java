@@ -15,7 +15,7 @@ import domain.Track;
 import domain.Video;
 
 public class VideoDAO extends Database{
-	private static Logger logger = Logger.getLogger(VideoDAO.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(VideoDAO.class.getName());
 	// Videos table
 	private static final String selectStatementString = 
 			"SELECT *" + 
@@ -41,7 +41,7 @@ public class VideoDAO extends Database{
     		addVideosFromDatabase(rs, trackList);
     	} 
     	catch (SQLException e) {
-    		logger.log(Level.SEVERE, "Error communicating with database.", e);
+    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
     	} 
     	finally {
     		closeStatement(statement);

@@ -14,7 +14,7 @@ import domain.Song;
 import domain.Track;
 
 public class SongDAO extends Database{
-	private static Logger logger = Logger.getLogger(SongDAO.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(SongDAO.class.getName());
 	// Songs table.
 	private static final String selectStatementString = 
 		"SELECT *" + 
@@ -34,7 +34,7 @@ public class SongDAO extends Database{
     		addSongsFromDatabase(rs, trackList);
     	} 
     	catch (SQLException e) {
-    		logger.log(Level.SEVERE, "Error communicating with database.", e);
+    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
     	} 
     	finally {
     		closeStatement(statement);

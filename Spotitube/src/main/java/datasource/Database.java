@@ -16,9 +16,9 @@ public abstract class Database {
 	 * een statische variabele.
 	 */
 	private static boolean driverLoaded = false;
-	private static Logger logger = Logger.getLogger(Database.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(Database.class.getName());
 	
-	public Database()
+	protected Database()
 	{
 		LoadDriver();
 	}
@@ -37,7 +37,7 @@ public abstract class Database {
 				return conn;
 			conn = DriverManager.getConnection(url, username, password);
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, "Can't establish a database connection.", e);
+			LOGGER.log(Level.SEVERE, "Can't establish a database connection.", e);
 		} 
 		return conn;
 	}
@@ -49,7 +49,7 @@ public abstract class Database {
 		try {
 			statement.close();
 		} catch (SQLException e) {
-			logger.log(Level.SEVERE, "Can't close a database resource.", e);
+			LOGGER.log(Level.SEVERE, "Can't close a database resource.", e);
 		} catch (NullPointerException e) { /* niks doen */ }
 	}
 	protected void closeDatabase()
@@ -58,7 +58,7 @@ public abstract class Database {
 			conn.close();
 		} 
 		catch (SQLException e) {
-			logger.log(Level.SEVERE, "Can't close a database resource.", e);
+			LOGGER.log(Level.SEVERE, "Can't close a database resource.", e);
 		} catch (NullPointerException e) { /* niks doen */ }
 	}
 	/*
@@ -71,7 +71,7 @@ public abstract class Database {
 				Class.forName(prop.getDriver());
 		}
 		catch (ClassNotFoundException e) {
-			logger.log(Level.SEVERE, "Can't load the database driver, check the database.properties file.", e);
+			LOGGER.log(Level.SEVERE, "Can't load the database driver, check the database.properties file.", e);
 		}
 	}
 }
