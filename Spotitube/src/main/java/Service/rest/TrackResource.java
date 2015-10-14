@@ -21,9 +21,9 @@ public class TrackResource {
 	}
 	
 	@GET
-    @Path("/{title}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Track> getTrackByTitle(@PathParam("title") final String title) {
+	@Path("/{title}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Track> getTrackByTitle(@PathParam("title") final String title) {
 		return trackDAO.findTrackByTitle(title);
-    }
+	}
 }

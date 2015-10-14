@@ -31,71 +31,71 @@ public class AvailabilityDAO extends Database {
 	 */
 	public List<Integer> getTrackIdsByPlaylist(int playlistId)
 	{
-    	PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(selectStatementString);
-    		statement.setInt(1, playlistId);
-    		ResultSet rs = statement.executeQuery();
-    		
-    		List<Integer> list = new ArrayList<Integer>();
-    		while (rs.next())
-    			list.add(rs.getInt(1));
-    		return list;
-    	} 
-    	catch (SQLException e) {
-    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
-    	} 
-    	finally {
-    		closeStatement(statement);
-    		closeDatabase();
-    	}			
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = getConnection();
+			statement = conn.prepareStatement(selectStatementString);
+			statement.setInt(1, playlistId);
+			ResultSet rs = statement.executeQuery();
+			
+			List<Integer> list = new ArrayList<Integer>();
+			while (rs.next())
+				list.add(rs.getInt(1));
+			return list;
+		} 
+		catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		} 
+		finally {
+			closeStatement(statement);
+			closeDatabase();
+		}			
 		return null;
 	}
-    /*
-     * INSERT
-     */	
-    public void insert(int playlistId, int trackId, int availability)
-    {
-    	PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(insertStatementString);
-    		statement.setInt(1, playlistId);
-    		statement.setInt(2, trackId);
-    		statement.setInt(3, availability);
-    		statement.execute();
-    	} 
-    	catch (SQLException e) {
-    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
-    	} 
-    	finally {
+	/*
+	 * INSERT
+	 */	
+	public void insert(int playlistId, int trackId, int availability)
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = getConnection();
+			statement = conn.prepareStatement(insertStatementString);
+			statement.setInt(1, playlistId);
+			statement.setInt(2, trackId);
+			statement.setInt(3, availability);
+			statement.execute();
+		} 
+		catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		} 
+		finally {
 			closeStatement(statement);
 			closeDatabase();
-    	}
-    }
-    /*
-     * DELETE
-     */
-    public void delete(int playlistId, int trackId)
-    {
-    	PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(deleteStatementString);
-    		statement.setInt(1, playlistId);
-    		statement.setInt(2, trackId);
-    		statement.execute();
-    	}
-    	catch (SQLException e) {
-    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
-    	}
-    	finally {
+		}
+	}
+	/*
+	 * DELETE
+	 */
+	public void delete(int playlistId, int trackId)
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = getConnection();
+			statement = conn.prepareStatement(deleteStatementString);
+			statement.setInt(1, playlistId);
+			statement.setInt(2, trackId);
+			statement.execute();
+		}
+		catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		}
+		finally {
 			closeStatement(statement);
 			closeDatabase();
-    	}
-    }	
+		}
+	}	
 }

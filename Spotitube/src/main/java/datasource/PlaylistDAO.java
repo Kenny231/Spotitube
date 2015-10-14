@@ -81,92 +81,92 @@ public class PlaylistDAO extends Database{
 	/* 
 	 * Query kan meerdere resultaten teruggeven.
 	 */
-    private List<Playlist> addPlaylistsFromDatabase(ResultSet rs) throws SQLException {
-        List<Playlist> list = new ArrayList<Playlist>();
-        while (rs.next())
-        {
-            list.add(new Playlist(rs.getInt(1), rs.getString(2), rs.getString(3), trackDAO.findTracksByPlaylistId(rs.getInt(1))));
-        }
-        return list;
-    }
-    /*
-     * INSERT
-     */
-    public void insert(String owner, String name)
-    {
-    	PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(insertStatementString);
-    		statement.setString(1, owner);
-    		statement.setString(2, name);
-    		statement.execute();
-    	} 
-    	catch (SQLException e) {
-    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
-    	} 
-    	finally {
+	private List<Playlist> addPlaylistsFromDatabase(ResultSet rs) throws SQLException {
+		List<Playlist> list = new ArrayList<Playlist>();
+		while (rs.next())
+		{
+			list.add(new Playlist(rs.getInt(1), rs.getString(2), rs.getString(3), trackDAO.findTracksByPlaylistId(rs.getInt(1))));
+		}
+		return list;
+	}
+	/*
+	 * INSERT
+	 */
+	public void insert(String owner, String name)
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = getConnection();
+			statement = conn.prepareStatement(insertStatementString);
+			statement.setString(1, owner);
+			statement.setString(2, name);
+			statement.execute();
+		} 
+		catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		} 
+		finally {
 			closeStatement(statement);
 			closeDatabase();
-    	}
-    }
-    /*
-     * UPDATE
-     */
-    public void update(int id, String owner, String name)
-    {
-    	PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(updateStatementString);
-    		statement.setString(1, owner);
-    		statement.setString(2, name);
-    		statement.setInt(3, id);
-    		statement.execute();
-    	}
-    	catch(SQLException e) {
-    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
-    	}
-    	finally {
+		}
+	}
+	/*
+	 * UPDATE
+	 */
+	public void update(int id, String owner, String name)
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = getConnection();
+			statement = conn.prepareStatement(updateStatementString);
+			statement.setString(1, owner);
+			statement.setString(2, name);
+			statement.setInt(3, id);
+			statement.execute();
+		}
+		catch(SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		}
+		finally {
 			closeStatement(statement);
 			closeDatabase();
-    	}
-    }
-    /*
-     * DELETE
-     */
-    public void delete(int id)
-    {
-    	PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(deleteStatementString);
-    		statement.setInt(1, id);
-    		statement.execute();
-    	}
-    	catch (SQLException e) {
-    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
-    	}
-    	finally {
+		}
+	}
+	/*
+	 * DELETE
+	 */
+	public void delete(int id)
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = getConnection();
+			statement = conn.prepareStatement(deleteStatementString);
+			statement.setInt(1, id);
+			statement.execute();
+		}
+		catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		}
+		finally {
 			closeStatement(statement);
 			closeDatabase();
-    	}
-    }
-    /*
-     * Methode om een track toe te voegen aan een playlist
-     */
-    public void addTrackToPlaylist(int playlistId, int trackId, int availability)
-    {
-    	availabilityDAO.insert(playlistId, trackId, availability);
-    }
-    /*
-     * Methode om een track te verwijderen van een playlist
-     */
-    public void deleteTrackFromPlaylist(int playlistId, int trackId)
-    {
-    	availabilityDAO.delete(playlistId, trackId);
-    }    
+		}
+	}
+	/*
+	 * Methode om een track toe te voegen aan een playlist
+	 */
+	public void addTrackToPlaylist(int playlistId, int trackId, int availability)
+	{
+		availabilityDAO.insert(playlistId, trackId, availability);
+	}
+	/*
+	 * Methode om een track te verwijderen van een playlist
+	 */
+	public void deleteTrackFromPlaylist(int playlistId, int trackId)
+	{
+		availabilityDAO.delete(playlistId, trackId);
+	}	 
 }

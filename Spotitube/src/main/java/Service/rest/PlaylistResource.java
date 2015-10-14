@@ -23,23 +23,23 @@ public class PlaylistResource {
 	}
 	
 	@GET
-    @Path("/{owner}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Playlist> getPlaylistByOwner(@PathParam("owner") final String owner) {
+	@Path("/{owner}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Playlist> getPlaylistByOwner(@PathParam("owner") final String owner) {
 		return ((PlaylistDAO) playlistDAO).findPlaylistByOwner(owner);
-    }	
+	}	
 	
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addPlaylist(Playlist playlist)
-    {
-    	((PlaylistDAO) playlistDAO).insert(playlist.getOwner(), playlist.getName());
-    }
-    
-    @DELETE
-    @Path("/{id}")
-    public void deletePlaylist(@PathParam("id") final int id)
-    {
-        ((PlaylistDAO) playlistDAO).delete(id);
-    }
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addPlaylist(Playlist playlist)
+	{
+		((PlaylistDAO) playlistDAO).insert(playlist.getOwner(), playlist.getName());
+	}
+	
+	@DELETE
+	@Path("/{id}")
+	public void deletePlaylist(@PathParam("id") final int id)
+	{
+		((PlaylistDAO) playlistDAO).delete(id);
+	}
 }

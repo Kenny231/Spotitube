@@ -41,34 +41,34 @@ public class TrackDAO extends Database {
 	}	
 	private void load(List<Track> trackList, String statementString)
 	{
-    	PreparedStatement statement = null;
-    	try
-    	{
-    		Connection conn = getConnection();
-    		statement = conn.prepareStatement(statementString);
-    		ResultSet rs = statement.executeQuery();
-    		if (statementString == selectSongStatementString)
-    			addSongsFromDatabase(rs, trackList);
-    		else if (statementString == selectVideoStatementString)
-    			addVideosFromDatabase(rs, trackList);
-    			
-    	} 
-    	catch (SQLException e) {
-    		LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
-    	} 
-    	finally {
-    		closeStatement(statement);
-    		closeDatabase();
-    	}			
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = getConnection();
+			statement = conn.prepareStatement(statementString);
+			ResultSet rs = statement.executeQuery();
+			if (statementString == selectSongStatementString)
+				addSongsFromDatabase(rs, trackList);
+			else if (statementString == selectVideoStatementString)
+				addVideosFromDatabase(rs, trackList);
+				
+		} 
+		catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		} 
+		finally {
+			closeStatement(statement);
+			closeDatabase();
+		}			
 	}
-    private void addSongsFromDatabase(ResultSet rs, List<Track> trackList) throws SQLException {
-    	while (rs.next())
-    		trackList.add(new Song(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
-    }
+	private void addSongsFromDatabase(ResultSet rs, List<Track> trackList) throws SQLException {
+		while (rs.next())
+			trackList.add(new Song(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
+	}
 	private void addVideosFromDatabase(ResultSet rs, List<Track> trackList) throws SQLException {
 		while (rs.next())
 			trackList.add(new Video(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8)));
-	}      
+	}	   
 	/*
 	 * Methode om alle tracks op te halen.
 	 */
@@ -79,38 +79,38 @@ public class TrackDAO extends Database {
 	/*
 	 * Methode om alle tracks te vinden bij een bepaalde playlist id.
 	 */
-    public List<Track> findTracksByPlaylistId(int playlistId)
-    {
+	public List<Track> findTracksByPlaylistId(int playlistId)
+	{
 		List<Track> trackList = new ArrayList<Track>();
 		List<Integer> trackIds = availabilityDAO.getTrackIdsByPlaylist(playlistId);
 		addTracksFromList(trackList, trackIds);
 		return trackList;
-    }
-    private void addTracksFromList(List<Track> trackList, List<Integer> trackIds)
-    {
-    	for (int trackId : trackIds)
-    	{
-    		for (Track track : this.trackList)
-    		{
-    			if (track.getId() == trackId)
-    			{
-    				trackList.add(track);
-    				break;
-    			}
-    		}
-    	}
-    }
-    /*
-     * Methode om een track te vinden met een bepaalde titel.
-     */
-    public List<Track> findTrackByTitle(String title)
-    {
-    	List<Track> trackList = new ArrayList<Track>();
-    	for (Track track : this.trackList)
-    	{
-    		if (track.getTitle().toLowerCase() == title.toLowerCase())
-    			trackList.add(track);
-    	}
-    	return trackList;
-    }
+	}
+	private void addTracksFromList(List<Track> trackList, List<Integer> trackIds)
+	{
+		for (int trackId : trackIds)
+		{
+			for (Track track : this.trackList)
+			{
+				if (track.getId() == trackId)
+				{
+					trackList.add(track);
+					break;
+				}
+			}
+		}
+	}
+	/*
+	 * Methode om een track te vinden met een bepaalde titel.
+	 */
+	public List<Track> findTrackByTitle(String title)
+	{
+		List<Track> trackList = new ArrayList<Track>();
+		for (Track track : this.trackList)
+		{
+			if (track.getTitle().toLowerCase() == title.toLowerCase())
+				trackList.add(track);
+		}
+		return trackList;
+	}
 }
