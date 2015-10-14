@@ -5,7 +5,7 @@ public class Video extends Track{
 	private String publicationDate;
 	private String description;
 	
-	public Video(int id, String performer, String title, String url, int duration, int playcount, String publicationDate, String Description)
+	public Video(int id, String performer, String title, String url, int duration, int playcount, String publicationDate, String description)
 	{
 		super(id, performer, title, url, duration);
 		this.playcount = playcount;

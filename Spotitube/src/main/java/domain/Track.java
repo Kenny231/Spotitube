@@ -16,7 +16,7 @@ public abstract class Track {
 		this.duration = duration;
 	}
 	
-	public long getId()
+	public int getId()
 	{
 		return id;
 	}
