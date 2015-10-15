@@ -28,11 +28,19 @@ public class PlaylistResource implements IPlaylistResource {
 	}
 	
 	@GET
-	@Path("/{owner}")
+	@Path("/owner/{owner}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Playlist> getPlaylistByOwner(@PathParam("owner") final String owner) {
 		return playlistDAO.findPlaylistByOwner(owner);
-	}	
+	}
+
+	@GET
+	@Path("/id/{id}")
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Playlist getPlaylistById(@PathParam("owner") final String id)
+	{
+		return playlistDAO.findPlaylistById(Integer.parseInt(id));
+	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

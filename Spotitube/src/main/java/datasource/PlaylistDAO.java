@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import domain.Playlist;
 
-public class PlaylistDAO extends Database{
+public class PlaylistDAO extends Database implements IPlaylistDAO {
 	private final static Logger LOGGER = Logger.getLogger(PlaylistDAO.class.getName());
 	
 	private AvailabilityDAO availabilityDAO = new AvailabilityDAO();
@@ -68,6 +68,29 @@ public class PlaylistDAO extends Database{
 			rs = statement.executeQuery();
 			List<Playlist> list = addPlaylistsFromDatabase(rs);
 			return list;
+		}
+		catch (SQLException e) {
+			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);
+		}
+		finally {
+			closeStatement(statement);
+			closeDatabase();
+		}
+		return null;
+	}
+	public Playlist findPlaylistById(int id)
+	{
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try {
+			Connection conn = getConnection();
+			statement = conn.prepareStatement("SELECT * FROM Playlist WHERE id=?");
+			statement.setInt(1, id);
+			rs = statement.executeQuery();
+			Playlist playlist = null;
+			if (rs.next())
+				playlist = new Playlist(rs.getInt(1), rs.getString(2), rs.getString(3), trackDAO.findTracksByPlaylistId(rs.getInt(1)));
+			return playlist;
 		}
 		catch (SQLException e) {
 			LOGGER.log(Level.SEVERE, "Error communicating with database.", e);

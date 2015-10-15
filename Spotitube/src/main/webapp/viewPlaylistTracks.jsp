@@ -9,28 +9,23 @@
 <table>
  	<thead>
     	<th>Id</th>
-    	<th>Owner</th>
     	<th>Title</th>
+    	<th>Duration</th>
     </thead>
     <tbody>
-    	<form action="viewPlaylistTracks" method="GET">
-    	<c:forEach items="${all}" var="current">
+    	<c:forEach items="${tracksByPlaylist}" var="current">
       	<tr>
             <td>
                     <c:out value="${current.id}"/>
             </td>
             <td>
-                    <c:out value="${current.owner}"/>
+                    <c:out value="${current.title}"/>
             </td>
             <td>
-                    <c:out value="${current.name}"/>
-            </td>
-            <td>
-            	<button type="submit" name="id" value="${current.id}">Bekijk</button>
+                    <c:out value="${current.duration}"/>
             </td>
         </tr>
     </c:forEach>
-    </form>
     </tbody>
 </table>
 </body>
