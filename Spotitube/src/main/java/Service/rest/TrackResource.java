@@ -2,16 +2,17 @@ package service.rest;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import datasource.PlaylistDAO;
-import datasource.TrackDAO;
-import domain.Playlist;
+import datasource.ITrackDAO;
 import domain.Track;
 
+@Path("/track")
 public class TrackResource {
-	TrackDAO trackDAO = new TrackDAO();
+	@Inject
+	ITrackDAO trackDAO;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

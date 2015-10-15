@@ -6,40 +6,45 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import datasource.Database;
-import datasource.PlaylistDAO;
+import datasource.IPlaylistDAO;
 import domain.Playlist;
 
 @Path("/playlist")
-public class PlaylistResource {
+public class PlaylistResource implements IPlaylistResource {
 	
-	PlaylistDAO playlistDAO = new PlaylistDAO();
+	private IPlaylistDAO playlistDAO;
+	
+	@Inject	
+	public PlaylistResource(IPlaylistDAO playlistDAO)
+	{
+		this.playlistDAO = playlistDAO;
+	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Playlist> getAllPlaylists()
 	{
-		return ((PlaylistDAO) playlistDAO).findAllPlaylists();
+		return playlistDAO.findAllPlaylists();
 	}
 	
 	@GET
 	@Path("/{owner}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Playlist> getPlaylistByOwner(@PathParam("owner") final String owner) {
-		return ((PlaylistDAO) playlistDAO).findPlaylistByOwner(owner);
+		return playlistDAO.findPlaylistByOwner(owner);
 	}	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addPlaylist(Playlist playlist)
 	{
-		((PlaylistDAO) playlistDAO).insert(playlist.getOwner(), playlist.getName());
+		playlistDAO.insert(playlist.getOwner(), playlist.getName());
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	public void deletePlaylist(@PathParam("id") final int id)
 	{
-		((PlaylistDAO) playlistDAO).delete(id);
+		playlistDAO.delete(id);
 	}
 }
