@@ -37,9 +37,9 @@ public class PlaylistResource implements IPlaylistResource {
 	@GET
 	@Path("/id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public Playlist getPlaylistById(@PathParam("owner") final String id)
+	public Playlist getPlaylistById(@PathParam("owner") final int id)
 	{
-		return playlistDAO.findPlaylistById(Integer.parseInt(id));
+		return playlistDAO.findPlaylistById(id);
 	}
 	
 	@POST

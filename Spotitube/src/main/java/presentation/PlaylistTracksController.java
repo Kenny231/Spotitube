@@ -27,7 +27,7 @@ public class PlaylistTracksController extends AbstractInjectableServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String id = request.getParameter("id");
-		Playlist playlist = resource.getPlaylistById(id);
+		Playlist playlist = resource.getPlaylistById(Integer.parseInt(id));
 		if (playlist != null)
 			request.setAttribute("tracksByPlaylist", playlist.getTrackList());
 		else
