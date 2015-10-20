@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import datasource.util.DatabaseProperties;
+
 public abstract class Database {
 	private static DatabaseProperties prop = new DatabaseProperties();
 	/*

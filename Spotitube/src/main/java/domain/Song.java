@@ -8,7 +8,9 @@ public class Song extends Track{
 		super(id, performer, title, url, duration);
 		this.album = album;
 	}
-	
+	/*
+	 * Getter
+	 */
 	public String getAlbum()
 	{
 		return album;

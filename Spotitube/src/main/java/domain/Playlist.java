@@ -7,26 +7,16 @@ public class Playlist {
 	private String owner;
 	private String name;
 	private int id;
-	
-	private List<Track> trackList = new ArrayList<Track>();
 		
-	public Playlist(int id, String owner, String name, List<Track> trackList)
+	public Playlist(int id, String owner, String name)
 	{
 		this.id = id;
 		this.owner = owner;
 		this.name = name;
-		this.trackList = trackList;
 	}
-	
-	public void addTrack(Track track)
-	{
-		trackList.add(track);
-	}
-	public void changeName(String name)
-	{
-		this.name = name;
-	}
-	
+	/*
+	 * Getters and setters.
+	 */
 	public long getId()
 	{
 		return id;
@@ -38,5 +28,9 @@ public class Playlist {
 	public String getName()
 	{
 		return name;
+	}
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 }

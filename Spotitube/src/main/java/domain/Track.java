@@ -15,7 +15,9 @@ public abstract class Track {
 		this.url = url;
 		this.duration = duration;
 	}
-	
+	/*
+	 * Getters en setters
+	 */
 	public int getId()
 	{
 		return id;
@@ -28,7 +30,7 @@ public abstract class Track {
 	{
 		return title;
 	}
-	public String getURL()
+	public String getUrl()
 	{
 		return url;
 	}

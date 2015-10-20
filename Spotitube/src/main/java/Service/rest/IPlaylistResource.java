@@ -13,5 +13,9 @@ public interface IPlaylistResource {
 	
 	public void addPlaylist(Playlist playlist);
 	
+	public void addPlaylist(String owner, String name);
+	
 	public void deletePlaylist(int id);
+	
+	public void changePlaylistName(int id, String name);
 }

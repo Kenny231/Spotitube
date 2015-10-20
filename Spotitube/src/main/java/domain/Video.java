@@ -12,7 +12,9 @@ public class Video extends Track{
 		this.publicationDate = publicationDate;
 		this.description = description;
 	}
-	
+	/*
+	 * Getters en setters
+	 */
 	public int getPlaycount()
 	{
 		return playcount;

@@ -37,9 +37,14 @@ public class PlaylistResource implements IPlaylistResource {
 	@GET
 	@Path("/id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)	
-	public Playlist getPlaylistById(@PathParam("owner") final int id)
+	public Playlist getPlaylistById(@PathParam("id") final int id)
 	{
 		return playlistDAO.findPlaylistById(id);
+	}
+	
+	public void addPlaylist(String owner, String name)
+	{
+		addPlaylist(new Playlist(0, owner, name));
 	}
 	
 	@POST
@@ -49,8 +54,15 @@ public class PlaylistResource implements IPlaylistResource {
 		playlistDAO.insert(playlist.getOwner(), playlist.getName());
 	}
 	
+	@PUT
+	@Path("/name/{id}/{name}")
+	public void changePlaylistName(@PathParam("id") final int id, @PathParam("name") final String name)
+	{
+		playlistDAO.update(id, name);
+	}
+	
 	@DELETE
-	@Path("/{id}")
+	@Path("/list/{id}")
 	public void deletePlaylist(@PathParam("id") final int id)
 	{
 		playlistDAO.delete(id);
